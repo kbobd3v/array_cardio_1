@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <title>Array Cardio Practice</title>
+</head>
+<body>
+<script>
+  const year = new Date();
+  const actualYear = year.getFullYear();
+
+  const artists = [
+    { first: "Bruce", last: "Dickinson", year: 1958, passed: actualYear },
+    { first: "Freddie", last: "Mercury", year: 1946, passed: 1991 },
+    { first: "Robert", last: "Plant", year: 1948, passed: actualYear },
+    { first: "Michael", last: "Jackson", year: 1958, passed: 2009 },
+    { first: "Diomedes", last: "Diaz", year: 1957, passed: 2013 },
+    { first: "Ozzy", last: "Osbourne", year:  1948, passed: actualYear },
+    { first: "Kurt", last: "Cobain", year: 1967, passed: 1994 },
+    { first: "Les", last: "Claypool", year: 1963, passed: actualYear },
+    { first: "Joe", last: "Satriani", year: 1956, passed: actualYear },
+    { first: "David", last: "Bowie", year: 1947, passed: 2016 },
+    { first: "Johnny", last: "Cash", year: 1932, passed: 2003 },
+    { first: "Elvis", last: "Presley", year: 1935, passed: 1977 },
+  ];
+
+  const actors = ["Depp, Jhonny","Cruise, Tom","Pacino, Al","Michelle, Pfeiffer","Sandler, Adam",
+                  "Willis, Bruce","Carrey, Jim","Oldman, Gary","Irons, Jeremy","Bale, Christian",
+                  "Buscemi, Steve","DiCaprio, Leonardo","Gibson, Mel","Cumberbatch, Benedict","Affleck, Ben",
+                  "Havill, Henry","Gadot, Gal","Pratt, Chris","Streep, Meryl","Brosnan, Pierce",
+                  "Firth, Collin","Foxx, Jamie","Waltz, Christoph","Jackson, Samuel L.","McKellen, Ian",];
+
+// Array prototype.filter
+// 1. Filter the list of artist for those who were born between 1950 and 1970.
+
+  const ninetyFifty = artists.filter(artist => (artist.year >= 1950 && artist.year < 1970));
+  console.table(ninetyFifty);
+
+// Array prototype.map
+// 2. Give us an array of the artists first and last names
+
+  const fullNames = artists.map(artist => `${artist.first}` + " " + `${artist.last}`);
+  console.log(fullNames);
+
+// Array prototype.sort
+// 3. Sort the artist by birthday, oldest to youngest.
+
+  const ordered = artists.sort((oldest, youngest) => oldest.year > youngest.year ? 1 : -1);
+  console.table(ordered);
+
+  /* You can also use this syntax 
+  const ordered = artists.sort(function(oldest, youngest) {
+    if (oldest.year > youngest.year){
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+  */
+
+
+// Array prototype.reduce
+// 4. Hoy many years did all the artists live?
+
+/*  const artistsPassed = artists.filter(artist => (artist.passed !== "Alive")); This was made to filter the dead artists
+from the living ones, but after adding the const actualYear to the array we can get the actual year to do any math we need.
+*/
+  const totalYears = artists.reduce((total, artist) => {
+     return total + (artist.passed - artist.year);
+  }, 0);
+  console.log(totalYears);
+
+// Array prototype.sort 
+// 5. Sort the artist by years lived
+const oldest = artists.sort(function (a, b) {
+  const lastGuy = a.passed - a.year;
+  const nextGuy = b.passed - b.year;
+  return lastGuy > nextGuy ? -1 : 1;
+});
+
+console.table(oldest);
+
+// 6. Create a list of boulevards in paris that contain "de" anywhere in the name
+// https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+
+/*const go = document.querySelector(".mw-category"); // This query takes all the elements with the class .mw-category from the DOM
+const links = Array.from(go.querySelectorAll("a")); // This Query takes all the links elements from the previous selection and create an array with them
+const de = links
+      .map(link => link.textContent) // Once we create an array with the links, .map and textContent create a list from the array and returns a chain of text.
+      .filter(streetName => streetName.includes("de")); // .filter and .includes takes all the nodes from the text chain that match with the condition "de".
+ */   
+
+// 7. Sort excercise
+// Sort the people aphabetically  by last name.
+
+const alpha = actors.sort((lastOne, nextOne) => {
+  const [aLast, aFirst] = lastOne.split(", ");
+  const [bLast, bFirst] = nextOne.split(", ");
+  return aLast > bLast ? 1 : -1;
+});
+console.log(alpha);
+
+ // 8. Reduce Exercise
+// Sum up the instances of each of these
+const data = [
+    'car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' 
+  ];
+
+const vehicles = data.reduce( function(obj, item){
+  if (!obj[item]){
+      obj[item] = 0;
+    }
+    obj[item]++;
+    return obj;
+  }, {});
+  console.log(vehicles);
+</script>
+
+</body>
+</html>
